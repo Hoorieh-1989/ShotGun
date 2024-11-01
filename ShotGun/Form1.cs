@@ -22,6 +22,11 @@ namespace ShotGun
             gameLogic = new Game(player, computer);
             UpdateStatus();
         }
+        private void DisplayMessage(string resultMessage, bool isGameOver)
+        {
+            labelMessage.Text = resultMessage;
+            buttonStartAgain.Visible = true; 
+        }
 
         private void UpdateStatus()
         {
@@ -29,27 +34,34 @@ namespace ShotGun
             labelComputer.Text = $"{computer.Name} - Shots: {computer.Shot} - Choice: {computer.Choice}";
             labelMessage.Text = "";
         }
+        private void buttonStartAgain_Click(object sender, EventArgs e)
+        {
+            InitializeGame(); //clear evertyhing 
 
+        }
         private void buttonShoot_Click(object sender, EventArgs e)
         {
-            if (player.Shot > 0)
+            if (player.Shot == 0)
             {
-                player.Shoot();
-                computer.ComputerAction(); // Use computer instance directly
-                var (resultMessage, isGameOver) = gameLogic.Winner();
-                UpdateStatus();
-                DisplayMessage(resultMessage, isGameOver);
+                labelMessage.Text = "No shots left";
+                return;
             }
-            else
-            {
-                labelMessage.Text = "No shots left!";
-            }
+
+            player.Shoot();
+            computer.ComputerAction();
+
+            var (resultMessage, isGameOver) = gameLogic.Winner();
+
+            UpdateStatus(); 
+            DisplayMessage(resultMessage, isGameOver);
         }
+
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             player.Load();
-            computer.ComputerAction(); // Use computer instance directly
+            computer.ComputerAction(); 
+
             var (resultMessage, isGameOver) = gameLogic.Winner();
             UpdateStatus();
             DisplayMessage(resultMessage, isGameOver);
@@ -79,18 +91,9 @@ namespace ShotGun
             }
         }
 
-        private void DisplayMessage(string resultMessage, bool isGameOver)
-        {
-            labelMessage.Text = resultMessage;
-            buttonStartAgain.Visible = true; // Keep button visible always
-        }
+      
 
-
-        private void buttonStartAgain_Click(object sender, EventArgs e)
-        {
-            InitializeGame();
-            buttonStartAgain.Visible = true;
-        }
+       
 
         private void textBoxPlayerName_TextChanged(object sender, EventArgs e)
         {
@@ -99,12 +102,12 @@ namespace ShotGun
 
         private void textBoxComputer_TextChanged(object sender, EventArgs e)
         {
-            // Logic here if needed
+          
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Initial form load logic if needed
+            
         }
     }
 }

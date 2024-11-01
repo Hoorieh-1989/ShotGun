@@ -1,23 +1,20 @@
-﻿using Microsoft.VisualBasic.Devices;
-using System;
+﻿using System;
 
 namespace ShotGun
 {
     public class Player
     {
-
         public string Name { get; set; }
         public int Shot { get; set; }
         public string Choice { get; set; }
 
-        // Konstruktor
+        // Constructor
         public Player(int shots, string name, string choice)
         {
             Shot = shots;
             Name = name;
             Choice = choice;
         }
-
 
         public void Load()
         {
@@ -34,10 +31,9 @@ namespace ShotGun
             }
             else
             {
-                Choice = "0";
+                Choice = "No shots left";
             }
         }
-
 
         public void Block()
         {
@@ -52,6 +48,5 @@ namespace ShotGun
                 Shot -= 3; // Use 3 shots for Shotgun
             }
         }
-
     }
 }
